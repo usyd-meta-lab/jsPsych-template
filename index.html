@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>USYD Meta Lab</title>
+  <link rel="icon" type="image/x-icon" href="https://usyd-meta-lab.github.io/favicon-32x32.png">
+
+  <!-- Load jsPsych and dependencies -->
+  <script src="https://unpkg.com/jspsych@8.2.1"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+  <link href="https://unpkg.com/jspsych@8.2.1/css/jspsych.css" rel="stylesheet" type="text/css" />
+  <link href="https://unpkg.com/jquery-ui-css@1.11.5/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+  <!-- Load jsPsych plugins -->
+  <script src="https://unpkg.com/@jspsych/plugin-instructions@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-external-html@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-browser-check@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-canvas-keyboard-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-call-function@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-fullscreen@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-likert@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+
+  <!-- Load the info sheets -->
+  <script src="https://usyd-meta-lab.github.io/files/info_sheets.js"></script>
+
+
+
+  <!-- Custom CSS -->
+  <link href="assets/css/custom-css.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body></body>
+
+<script>
+
+
+
+/* 
+  ===============================================================
+  =                GLOBAL PARAMETERS                 =
+  ===============================================================
+*/
+
+
+/**
+ * These variables should be modified as needed:
+ * - DataPipe_ID:         The DataPipe ID to which the data will be saved.
+ * - SONA/prolific info:  Used for setting up redirect links.
+ */
+const DataPipe_ID = "vmuVgxxOMTlT";  // The DataPipe ID for where the data should be stored
+const sona_experiment_id = "NA";      // The SONA experiment ID 
+const sona_credit_token = "NA";       // The SONA credit token 
+const Prolific_redirect = "CHGWKNI0"; // The Prolific redirect link (to credit)
+const Prolific_failed_check = "C13PIUOF"; // The Prolific redirect link for failing an attention check
+const task_time = 30; // (minutes) for the PIS
+const accuracy_criterion = .55; // Accuracy cut-off for manual data review
+
+
+
+
+// Load the global environment and the expeirment
+</script>
+<script src="assets/js/global.js"></script>
+<script src="assets/js/experiment.js"></script>
+<script src="assets/js/survey.js"></script>
+<script>
+
+
+/* 
+  ===============================================================
+  =                 BUILD AND RUN THE EXPERIMENT                =
+  ===============================================================
+*/
+
+/**
+ * Full timeline for Condition 1. 
+ * (You can create separate timelines/conditions if desired.)
+ */
+const condition_1_timeline = [
+  browser_check,
+  enter_fullscreen,
+  participant_info_paid,  // from info_sheets.js 
+  participant_info_SONA,  // from info_sheets.js
+  demographics,           // from info_sheets.js
+  hello_trial,
+  debug,
+  save_data,
+  DEBRIEF_SONA,
+  data_saved,  
+];
+
+
+
+/**
+ * Asynchronously fetches a 'condition' from DataPipe (if needed),
+ * then runs the corresponding timeline. If you do not use multiple
+ * conditions, you could simply run condition_1_timeline directly.
+ */
+async function createExperiment() {
+  const condition = await jsPsychPipe.getCondition(DataPipe_ID);
+  jsPsych.data.addProperties({ condition: condition });
+
+  // If you have different conditions, you could add them here:
+  if (condition == 0) {
+    jsPsych.run(condition_1_timeline);
+  } else {
+    // Default fallback
+    jsPsych.run(condition_1_timeline);
+  }
+
+
+}
+
+
+
+// Start the experiment
+createExperiment();
+
+</script>
+</html>
