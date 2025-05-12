@@ -1,7 +1,7 @@
 
 # 🧠 USYD Meta Lab – jsPsych Experiment Template
 
-This is a customizable experiment template for running browser-based behavioral studies using [jsPsych](https://www.jspsych.org/) (v8.2.1), developed by the [USYD Meta Lab](https://github.com/usyd-meta-lab). It supports integration with Prolific and SONA, automatic condition assignment via DataPipe, and data saving via the jsPsychPipe plugin.
+This is a customizable experiment template for running browser-based behavioral studies using [jsPsych](https://www.jspsych.org/) (v8.2.1), developed by the [USYD Meta Lab](https://usyd-meta-lab.github.io). It supports integration with Prolific and SONA, automatic condition assignment via DataPipe, and data saving via the jsPsychPipe plugin.
 
 ## 🚀 Features
 
