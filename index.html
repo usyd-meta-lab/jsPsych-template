@@ -62,7 +62,7 @@ const Prolific_redirect = "CHGWKNI0"; // The Prolific redirect link (to credit)
 const Prolific_failed_check = "C13PIUOF"; // The Prolific redirect link for failing an attention check
 const task_time = 30; // (minutes) for the PIS
 const accuracy_criterion = .55; // Accuracy cut-off for manual data review
-const local_save = true; //If true, no data will be pushed to the server; instead a local csv is saved and no redirect to Prolific/SONA will occur.
+const local_save = false; //If true, no data will be pushed to the server; instead a local csv is saved and no redirect to Prolific/SONA will occur.
 const in_lab = false; //If true a SONA ID will be randomly generated and no redirect will occur; instead, a notify expeirmenter screen will show after the debrief
 
 // Load the global environment and the expeirment
@@ -92,7 +92,7 @@ const condition_1_timeline = [
   hello_trial,
   debug,
   save_data,
-  DEBRIEF_SONA,
+  DEBRIEF_SONA2,
   data_saved,  
 ];
 
