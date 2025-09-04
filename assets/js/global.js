@@ -1,8 +1,8 @@
 
 /* 
-  ===============================================================
-  =              GLOBAL SETTINGS & INITIALIZATION               =
-  ===============================================================
+===============================================================
+=              GLOBAL SETTINGS & INITIALIZATION               =
+===============================================================
 */
 
 // Get current date and time in Sydney
@@ -18,53 +18,53 @@ let aborted = false;        // Tracks whether user was aborted from experiment
 let in_fullscreen = false   // Tracks whether participant is in fullscreen (set to false to begin with)
 
 // Initialize jsPsych
-  const jsPsych = initJsPsych({
-    on_interaction_data_update: function(data) {
+const jsPsych = initJsPsych({
+  on_interaction_data_update: function(data) {
     // If participant exits fullscreen, note it (unless it's a pilot).
-      if (data.event === 'fullscreenexit' && pilot !== 'true') {
-        in_fullscreen = false;
-      }
-    },
-    on_finish: function(data) {
-
-        // Get current date and time in Sydney
-          var finishinSydney = new Date().toLocaleString("en-AU", {
-            timeZone: "Australia/Sydney"
-          });
-          jsPsych.data.addProperties({ finish_time: finishinSydney });
-
-
+    if (data.event === 'fullscreenexit' && pilot !== 'true') {
+      in_fullscreen = false;
+    }
+  },
+  on_finish: function(data) {
+    
+    // Get current date and time in Sydney
+    var finishinSydney = new Date().toLocaleString("en-AU", {
+      timeZone: "Australia/Sydney"
+    });
+    jsPsych.data.addProperties({ finish_time: finishinSydney });
+    
+    
     // If user is forced to abort (wrong browser or device), show alert
-      if (aborted === true) {
-        alert("You must use Safari, Chrome or Firefox on a Desktop or Laptop to complete this experiment.");
-      }
-
-
-      if (aborted === false) {
-
-
-        // Turn on to save a local copy
-       // jsPsych.data.get().localSave('csv','mydata.csv'); 
-
-        const meanCorrect = jsPsych.data.get().filter({trial_type: "Summary Trial"}).select('correct').mean();
-        if (meanCorrect < accuracy_criterion) {
+    if (aborted === true) {
+      alert("You must use Safari, Chrome or Firefox on a Desktop or Laptop to complete this experiment.");
+    }
+    
+    
+    if (aborted === false) {
+      
+      
+      // Turn on to save a local copy
+      if (typeof local_save !== "undefined" && local_save === true) jsPsych.data.get().localSave('csv','mydata.csv'); 
+      
+      const meanCorrect = jsPsych.data.get().filter({trial_type: "Summary Trial"}).select('correct').mean();
+      if (meanCorrect < accuracy_criterion) {
         // Failed check
-         window.location = attention_redirect_link;
-        } else {
+        if (typeof local_save === "undefined" || local_save === false) window.location = attention_redirect_link;
+      } else {
         // Passed check
-        window.location = redirect_link;
-        }
+        if (typeof local_save === "undefined" || local_save === false) window.location = redirect_link;
       }
     }
-  });
+  }
+});
 
 
 
 
 /* 
-  ===============================================================
-  =                 BROWSER & FULLSCREEN CHECKS                 =
-  ===============================================================
+===============================================================
+=                 BROWSER & FULLSCREEN CHECKS                 =
+===============================================================
 */
 
 // Check that participant is using Chrome or Firefox on a desktop. Note that previously excluded Safari but it seems to be working
@@ -120,9 +120,9 @@ const enter_fullscreen = {
 
 
 /* 
-  ===============================================================
-  =                    FINAL DEBRIEF & SAVE                     =
-  ===============================================================
+===============================================================
+=                    FINAL DEBRIEF & SAVE                     =
+===============================================================
 */
 
 // Optional debug question: Issues encountered?
@@ -142,14 +142,24 @@ const data_saved = {
 
 // Capture URL parameters (Prolific, SONA, pilot, etc.)
 const PROLIFIC_PID = jsPsych.data.getURLVariable('PROLIFIC_PID');
-const SONAID       = jsPsych.data.getURLVariable('SONAID');
+
 const pilot        = jsPsych.data.getURLVariable('pilot');
+
+// if in lab, randomly allocate an ID
+if (typeof in_lab !== "undefined" && in_lab === true){
+  console.log("In lab, assigning random SONA ID")
+  var SONAID = jsPsych.randomization.randomID(20);
+} else{
+  var SONAID       = jsPsych.data.getURLVariable('SONAID');
+}
+
+// Store time
 jsPsych.data.addProperties({ start_time: nowInSydney });
 
 // Decide how to redirect user depending on whether they're from SONA or Prolific
 let redirect_link, attention_redirect_link;
 
-if (typeof SONAID !== 'undefined') {
+if (typeof SONAID !== 'undefined' | (typeof in_lab !== "undefined" && in_lab === true)) {
   // SONA
   jsPsych.data.addProperties({ participant_id: SONAID, Source: "SONA" });
   redirect_link = `https://sydneypsych.sona-systems.com/webstudy_credit.aspx?experiment_id=${sona_experiment_id}&credit_token=${sona_credit_token}&survey_code=${SONAID}&id=${SONAID}`;
@@ -166,11 +176,22 @@ const subject_id = jsPsych.randomization.randomID(10);
 const filename   = `participant-${subject_id}_data.csv`;
 
 // We use jsPsychPipe to save to OSF (or another DataPipe-supported platform)
+
 const save_data = {
-  type: jsPsychPipe,
-  action: "save",
-  experiment_id: DataPipe_ID,
-  filename: filename,
-  data_string: () => jsPsych.data.get().csv()
-};
+  timeline: [
+    { type: jsPsychPipe,
+      action: "save",
+      experiment_id: DataPipe_ID,
+      filename: filename,
+      data_string: () => jsPsych.data.get().csv()
+    }
+  ],
+  conditional_function: function() {
+    // Skip if local save is on
+    if (typeof local_save !== "undefined" && local_save === true) {
+      return false;
+    } 
+    return true;
+  }
+}
 
