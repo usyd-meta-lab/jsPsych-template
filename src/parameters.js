@@ -1,0 +1,29 @@
+/* 
+  ===============================================================
+  =                GLOBAL PARAMETERS                 =
+  ===============================================================
+*/
+
+// Context
+const DataPipe_ID = "vmuVgxxOMTlT";  // The DataPipe ID for where the data should be stored
+window.DataPipe_ID = DataPipe_ID; // Used to aquire condition assignment (no need to change)
+const is_DEBUG = false; // Initalise in debug mode
+const task_time = 30; // (minutes) for the PIS
+const in_lab = false; //If true a SONA ID will be randomly generated and no redirect will occur; instead, a notify expeirmenter screen will show after the debrief
+const local_save = true; //If true, no data will be pushed to the server; instead a local csv is saved and no redirect to Prolific/SONA will occur.
+
+// Redirect
+const sona_experiment_id = "NA";      // The SONA experiment ID 
+const sona_credit_token = "NA";       // The SONA credit token 
+const Prolific_redirect = "CHGWKNI0"; // The Prolific redirect link (to credit)
+const Prolific_failed_check = "C13PIUOF"; // The Prolific redirect link for failing an attention check
+const accuracy_criterion = .55; // Accuracy cut-off for manual data review 
+
+
+// Experiment setup
+const conditionPromise = getCondition(); // Condition assignment from DataPipe
+var trialnum = 1; // trial count starting value
+var blocknum = 1; // block count starting value
+var in_fullscreen = false; // tracks full screen status (false to start)
+var aborted = false; // tracks aborted status (false to start)
+
