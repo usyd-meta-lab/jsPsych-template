@@ -23,7 +23,7 @@ var jsPsych = initJsPsych({
     on_finish: function(data){
         
         // Check if forced abort
-        if(aborted) return;
+        if(typeof aborted !== 'undefined' && aborted) return;
         
         // Store variables
         jsPsych.data.addProperties({ 
@@ -144,80 +144,4 @@ const save_data = {
 
 
 
-
-/* 
-===============================================================
-=                STANDARDISED TRIALS (move to cloud)                 =
-===============================================================
-*/
-
-
-// Check browser compatability
-var browserCheck = {
-    type: jsPsychBrowserCheck,
-    inclusion_function: (data) => {
-        // Accept only if browser is Chrome, Safari, or Firefox and not on mobile
-        return ['chrome', 'firefox', 'safari'].includes(data.browser) && data.mobile === false;
-    },
-    exclusion_message: (data) => {
-        aborted = true;
-        if (data.mobile) {
-            return '<p>You must use a desktop/laptop computer to participate in this experiment.</p>';
-        } else if (!['chrome','firefox', 'safari'].includes(data.browser)) {
-            return '<p>You must use Chrome, Safari, or Firefox as your browser to complete this experiment.</p>';
-        }
-    }
-};
-
-
-// Initalise full screen
-const enter_fullscreen = {
-    timeline: [
-        {
-            type: jsPsychFullscreen,
-            message: '<p>To take part in the experiment, your browser must be in fullscreen mode. Exiting fullscreen mode will pause the experiment.<br><br>Please click the button below to enable fullscreen and continue.</p>',
-            fullscreen_mode: true,
-            on_finish: function(){
-                in_fullscreen = true; // update tracker
-            }
-        }
-    ],
-    conditional_function: function() {
-        // Skip if in DEBUG
-        if (is_DEBUG) {
-            return false;
-        } 
-        return true;
-    }
-};
-
-
-// Check Fullscreen
-var check_fullscreen = {
-    timeline: [
-        
-        {type: jsPsychFullscreen,
-            message: '<p>You need to be in fullscreen mode to continue the experiment! <br></br> Please click the button below to enter fullscreen mode.<br></br><p>',
-            fullscreen_mode: true,
-            on_finish: function(){
-                in_fullscreen = true;
-            }
-        }
-    ],
-    conditional_function: function(){
-        if(in_fullscreen  | is_DEBUG){
-            return false;
-        } else {
-            return true;
-        }
-    }
-};
-
-// Optional debug question: Issues encountered?
-const debug = {
-    type: jsPsychSurveyText,
-    questions: [
-        {prompt: 'Did you experience any issues while completing this study?', rows: 5}
-    ]
-};
 

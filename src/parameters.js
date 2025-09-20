@@ -1,16 +1,29 @@
 /* 
   ===============================================================
+  =                EXPERIMENT PARAMETERS                 =
+  ===============================================================
+Add parameters that can be set dynamically for your experiment
+  */
+
+
+
+
+
+/* 
+  ===============================================================
   =                GLOBAL PARAMETERS                 =
   ===============================================================
+  Modifiable global parameters used in the template 
 */
 
 // Context
 const DataPipe_ID = "vmuVgxxOMTlT";  // The DataPipe ID for where the data should be stored
 window.DataPipe_ID = DataPipe_ID; // Used to aquire condition assignment (no need to change)
-const is_DEBUG = false; // Initalise in debug mode
+const is_DEBUG = true; // Initalise in debug mode
 const task_time = 30; // (minutes) for the PIS
 const in_lab = false; //If true a SONA ID will be randomly generated and no redirect will occur; instead, a notify expeirmenter screen will show after the debrief
 const local_save = true; //If true, no data will be pushed to the server; instead a local csv is saved and no redirect to Prolific/SONA will occur.
+const initalise_fullscreen = true; // initalise fullscreen
 
 // Redirect
 const sona_experiment_id = "NA";      // The SONA experiment ID 
@@ -24,6 +37,5 @@ const accuracy_criterion = .55; // Accuracy cut-off for manual data review
 const conditionPromise = getCondition(); // Condition assignment from DataPipe
 var trialnum = 1; // trial count starting value
 var blocknum = 1; // block count starting value
-var in_fullscreen = false; // tracks full screen status (false to start)
-var aborted = false; // tracks aborted status (false to start)
+
 
