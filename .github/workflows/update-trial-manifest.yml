@@ -1,6 +1,8 @@
 name: Update trial manifest
 
 on:
+  permissions:
+    contents: write
   push:
     branches:
       - main
