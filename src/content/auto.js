@@ -1,4 +1,4 @@
     var auto_trial = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: 'Auto listing'
+      stimulus: 'Auto listingng 2'
     }
