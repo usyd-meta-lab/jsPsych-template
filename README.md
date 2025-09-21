@@ -9,7 +9,7 @@ A starter kit for building browser-based behavioural tasks with [jsPsych 8.2.1](
 
 ## How the Template Runs
 - **Script flow** – `index.html` loads jsPsych, official plugins, and three helper utilities (`loadTrials`, `getCondition`, `augmentTimeline`). It then loads `src/parameters.js`, `src/main.js`, and finally `src/timeline.js`, which starts the study once everything is ready.
-- **Modular trials** – `loadTrials('src/trials')` automatically discovers every `.js` file inside `src/trials/`, fetches it, and exposes the variables within the file (they don't need to matches the filename) and you can have mutiple trials within a single file and they should all be exported to the timeline. Add or remove a file and it will appear in the `trials` object returned to `timeline.js`.
+- **Modular trials/blocks** – `loadTrials('src/content')` automatically discovers every `.js` file inside `src/trials/`, fetches it, and exposes the variables within the file (they don't need to matches the filename) and you can have mutiple trials within a single file and they should all be exported to the timeline. Add or remove a file and it will appear in the `content` object returned to `timeline.js`.
 - **Timeline augmentation** – before running, `timeline.js` passes your base timeline to `augmentTimeline()`. That helper adds the lab’s standard scaffolding: browser compatibility checks, fullscreen enforcement, consent/Participant Information Sheet blocks (Prolific, SONA, or in-lab variants), an optional demographics survey, a short “debug” feedback prompt, and the SONA debrief screens. You can keep the default, or copy the function into your own script (loaded after the CDN version) to customise or trim the extras.
 - **Condition assignment & saving** – `getCondition()` pulls the next available condition from DataPipe (once per participant) and `main.js` handles jsPsych initialisation, timestamping, summary accuracy checks, and saving via the jsPsychPipe plugin (or a local CSV if `local_save` is `true`).
 
@@ -17,8 +17,8 @@ A starter kit for building browser-based behavioural tasks with [jsPsych 8.2.1](
 - `index.html` – update script tags if you add custom plugins, adjust the `<title>`, or swap the favicon.
 - `src/parameters.js` – set study-wide toggles, redirect codes, and DataPipe credentials (see the parameter reference below).
 - `src/main.js` – tweak jsPsych initialisation, on-finish behaviour, data properties, or redirect logic.
-- `src/timeline.js` – compose the experiment timeline. Import trials from the loader’s `trials` object (
-- `src/trials/*.js` – define each trial or block in its own file. Can also inclkude multiple trials/block within a single file based on the structure most applicable
+- `src/timeline.js` – compose the experiment timeline. Import trials/blocks from the loader’s `content` object (
+- `src/content/*.js` – define each trial or block in its own file. Can also inclkude multiple trials/block within a single file based on the structure most applicable
 - `assets/` – place images or other static files referenced by your trials.
 
 ### Working with the Augmentation Helper
@@ -46,7 +46,7 @@ A starter kit for building browser-based behavioural tasks with [jsPsych 8.2.1](
 | `blocknum` | `1` | Initial block counter for multi-block tasks. | Adjust only if your logic requires a different starting index. |
 
 ## Tips for Novice jsPsych Developers
-- **Start with the examples** – open `src/trials/welcome.js` and `src/trials/hello_trial.js` to see the expected structure. Duplicate one of these files when adding new content.
+- **Start with the examples** – open `src/content/welcome.js` and `src/content/hello_trial.js` to see the expected structure. Duplicate one of these files when adding new content.
 - **Test in debug mode** – keep `is_DEBUG = true` while iterating so you can inspect data locally and skip redirects. Remember to turn it off before collecting real data.
 - **Saving data** – with `local_save = true`, jsPsych downloads a CSV when the study ends. Set it to `false` alongside a valid `DataPipe_ID` once you want submissions stored remotely.
 - **Recruitment redirects** – ensure the proper Prolific or SONA codes are in place before launch, or set `in_lab = true` to bypass them entirely.

@@ -1,6 +1,6 @@
 
 
-loadTrials('src/trials')
+loadTrials('src/content')
 .then((trials) => {
   
   // Define the timeline
