@@ -1,0 +1,12 @@
+{
+  "name": "jspsych-template",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "predeploy": "node scripts/generate-trial-manifest.js",
+    "deploy": "gh-pages -d ."
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  }
+}
