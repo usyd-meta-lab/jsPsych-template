@@ -4,9 +4,8 @@ A starter kit for building browser-based behavioural tasks with [jsPsych 8.2.1](
 
 ## Quick Start
 1. **Install the files** – clone or download this repository.
-2. **Serve the project locally** – the dynamic trial loader uses `fetch`, so open the project through a local server (for example, `python -m http.server 8000` or `npx http-server`).
-3. **Launch the experiment** – visit `http://localhost:8000/index.html` in Chrome, Firefox, or Safari.
-4. **Edit the template** – follow the file guide below to plug in your own instructions, trials, and parameters.
+2. **Serve the project locally** – the dynamic trial loader uses `fetch`, so open the project through a local server (for example, use the VS Code `live server` extension).
+3. **Edit the template** – follow the file guide below to plug in your own instructions, trials, and parameters.
 
 ## How the Template Runs
 - **Script flow** – `index.html` loads jsPsych, official plugins, and three helper utilities (`loadTrials`, `getCondition`, `augmentTimeline`). It then loads `src/parameters.js`, `src/main.js`, and finally `src/timeline.js`, which starts the study once everything is ready.
