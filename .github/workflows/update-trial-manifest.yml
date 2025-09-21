@@ -1,9 +1,7 @@
 name: Update trial manifest
 
 on:
-permissions:
-  contents: write
-push:
+  push:
     branches:
       - main
     paths:
@@ -17,6 +15,9 @@ push:
       - 'src/content/**'
       - 'scripts/generate-trial-manifest.js'
       - '.github/workflows/update-trial-manifest.yml'
+
+permissions:
+  contents: write
 
 jobs:
   regenerate-manifest:
