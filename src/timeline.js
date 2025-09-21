@@ -5,7 +5,6 @@ loadTrials('src/content')
   
   // Define the timeline
   var timeline = [
-    auto_trial,
     welcome,
     hello_trial,
     save_data
