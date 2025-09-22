@@ -6,9 +6,6 @@ Add parameters that can be set dynamically for your experiment
   */
 
 
-
-
-
 /* 
   ===============================================================
   =                GLOBAL PARAMETERS                 =
@@ -34,7 +31,6 @@ const accuracy_criterion = .55; // Accuracy cut-off for manual data review
 
 
 // Experiment setup
-const conditionPromise = getCondition(); // Condition assignment from DataPipe
 var trialnum = 1; // trial count starting value
 var blocknum = 1; // block count starting value
 
