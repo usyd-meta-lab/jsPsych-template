@@ -1,13 +1,5 @@
 /* 
   ===============================================================
-  =                EXPERIMENT PARAMETERS                 =
-  ===============================================================
-Add parameters that can be set dynamically for your experiment
-  */
-
-
-/* 
-  ===============================================================
   =                GLOBAL PARAMETERS                 =
   ===============================================================
   Modifiable global parameters used in the template 
@@ -15,7 +7,7 @@ Add parameters that can be set dynamically for your experiment
 
 // Context
 const DataPipe_ID = "vmuVgxxOMTlT";  // The DataPipe ID for where the data should be stored
-window.DataPipe_ID = DataPipe_ID; // Used to aquire condition assignment (no need to change)
+const condition = assignCondition(4, { useLocalStorage: false }); // Sets the condition. THe number (e.g. "4") determines the number of conditions possible. The useLocalStorage paramater determines if the condition should reload from local stroage or be ephemeral
 const is_DEBUG = true; // Initalise in debug mode
 const task_time = 30; // (minutes) for the PIS
 const in_lab = false; //If true a SONA ID will be randomly generated and no redirect will occur; instead, a notify expeirmenter screen will show after the debrief
@@ -34,4 +26,11 @@ const accuracy_criterion = .55; // Accuracy cut-off for manual data review
 var trialnum = 1; // trial count starting value
 var blocknum = 1; // block count starting value
 
+
+/* 
+  ===============================================================
+  =                EXPERIMENT PARAMETERS                 =
+  ===============================================================
+Add parameters that can be set dynamically for your experiment
+  */
 
