@@ -11,7 +11,7 @@ A starter kit for building browser-based behavioural tasks with [jsPsych 8.2.1](
 - **Script flow** – `index.html` loads jsPsych, official plugins, and three helper utilities (`loadTrials`, `getCondition`, `augmentTimeline`). It then loads `src/parameters.js`, `src/main.js`, and finally `src/timeline.js`, which starts the study once everything is ready.
 - **Modular trials/blocks** – `loadTrials('src/content')` automatically discovers every `.js` file inside `src/trials/`, fetches it, and exposes the variables within the file (they don't need to matches the filename) and you can have mutiple trials within a single file and they should all be exported to the timeline. Add or remove a file and it will appear in the `content` object returned to `timeline.js`.
 - **Timeline augmentation** – before running, `timeline.js` passes your base timeline to `augmentTimeline()`. That helper adds the lab’s standard scaffolding: browser compatibility checks, fullscreen enforcement, consent/Participant Information Sheet blocks (Prolific, SONA, or in-lab variants), an optional demographics survey, a short “debug” feedback prompt, and the SONA debrief screens. You can keep the default, or copy the function into your own script (loaded after the CDN version) to customise or trim the extras.
-- **Condition assignment & saving** – `getCondition()` pulls the next available condition from DataPipe (once per participant) and `main.js` handles jsPsych initialisation, timestamping, summary accuracy checks, and saving via the jsPsychPipe plugin (or a local CSV if `local_save` is `true`).
+- **Condition assignment & saving** – `assignCondition()` pulls the condition from a hash (once per participant is `useLocalStorage` is `true`) and `main.js` handles jsPsych initialisation, timestamping, summary accuracy checks, and saving via the jsPsychPipe plugin (or a local CSV if `local_save` is `true`).
 
 ## What to Edit and Why
 - `index.html` – update script tags if you add custom plugins, adjust the `<title>`, or swap the favicon.
@@ -41,7 +41,7 @@ A starter kit for building browser-based behavioural tasks with [jsPsych 8.2.1](
 | `Prolific_redirect` | `"CHGWKNI0"` | Completion code for successful Prolific participants. | Swap in the completion code from your Prolific study. |
 | `Prolific_failed_check` | `"C13PIUOF"` | Prolific code for failed attention or exclusion cases. | Replace with the appropriate failure code or a custom return URL. |
 | `accuracy_criterion` | `.55` | Threshold applied to summary-trial accuracy to decide success vs. failure redirect. | Adjust to match your exclusion rules or remove the check in `main.js`. |
-| `conditionPromise` | `getCondition()` | Starts the asynchronous condition assignment request. | Typically leave alone; use `await conditionPromise` where you need the value. |
+| `condition` | `assignCondition(4, { useLocalStorage: false });` | Sets the condition. The number (e.g. "4") determines the number of conditions possible. The useLocalStorage paramater determines if the condition should reload from local stroage or be ephemeral|
 | `trialnum` | `1` | Initial trial counter that you can increment within custom trials. | Optional—reset or remove if you do not track trial numbers manually. |
 | `blocknum` | `1` | Initial block counter for multi-block tasks. | Adjust only if your logic requires a different starting index. |
 
@@ -53,7 +53,7 @@ A starter kit for building browser-based behavioural tasks with [jsPsych 8.2.1](
 
 ## Further Resources
 - [jsPsych Documentation](https://www.jspsych.org/)
-- [USYD Meta Lab utilities](https://github.com/usyd-meta-lab/code/tree/main/jsUtilities) – reference implementations for `loadTrials`, `getCondition`, and `augmentTimeline`.
+- [USYD Meta Lab utilities](https://github.com/usyd-meta-lab/code/tree/main/jsUtilities) – reference implementations for `loadTrials`, `assignCondition`, and `augmentTimeline`.
 - [jsPsychPipe plugin](https://github.com/jspsych/jsPsych/tree/main/packages/plugin-pipe) – details on remote data storage via OSF/DataPipe.
 
 Happy experimenting!
